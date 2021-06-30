@@ -1,0 +1,90 @@
+import streamlit as st
+import numpy as np
+import pandas as pd
+import time
+import plotly.express as px
+from matplotlib import pyplot as plt
+from google.cloud import storage
+import os
+from PIL import Image
+from decouple import config
+
+gen_restore_bucket = "abuela_input_images_dev"
+scratches_bucket = "abuela_input_images_scratches_dev"
+
+# App libraries
+from app.object_store import objectStore as objectstore
+# Jaruco is the hometown my grandmother is from in Cuba.
+# She is the insipiration for this project.
+from app.pipelines import Jaruco as Jaruco
+
+
+# Start of Streamlit App
+# Convert this to an actual Main function later
+st.title("Hola, Abuela!")
+# st.markdown(
+#     "##Step 1."
+#     )
+# st.markdown(
+#     "Pick a photo you want to restore."
+#     )
+
+
+st.sidebar.write(
+    '''
+    ## Step 1.
+    Pick a photo you want to restore
+    '''
+    )
+
+
+uploaded_file = st.sidebar.file_uploader("Max image size 650x650 (temp issue due to gpu limits)")
+
+
+## Process the Photo
+if uploaded_file is not None:
+    #Display the photo that will get enhanced
+    image = Image.open(uploaded_file)
+
+
+    '''
+    **This is the photo that will get restored**
+    '''
+    st.image(image, caption="Before")
+
+    '''
+    ## Step 2.
+    **Choose what type of restore you want to apply**
+    '''
+    with st.form("Choose Restore Option"):
+        restore_type = st.radio("Does the image contain cracks or creases?", ['No - General Restore', 'Yes - Fill In Cracks'])
+        submitted = st.form_submit_button("Restore") 
+
+        if submitted:
+            if restore_type == 'No - General Restore':
+                # TEMP: Upload it to gcloud to bkup
+                objectstore.upload_blob(gen_restore_bucket, uploaded_file, uploaded_file.name)
+                
+                # Kick Off Restoration pipeline for no_scratch img
+                Jaruco.general_restore(uploaded_file)
+
+            elif restore_type == 'Yes - Fill In Cracks':
+                # TEMP: Upload it to gcloud to bkup
+                objectstore.upload_blob(scratches_bucket, uploaded_file, uploaded_file.name)
+                
+                # Kick Off Restoration pipeline for imgs with scratches
+                Jaruco.general_restore_with_cracks(uploaded_file)
+            else:
+                pass
+            
+            st.success('Done!')
+
+            before, after = st.beta_columns(2)
+            
+            with before:
+                st.header("Before")
+                st.image(image)
+
+            with after:
+                st.header("After")
+                st.image(objectstore.download_blob('abuela_output_images_dev'))
