@@ -9,8 +9,9 @@ import os
 from PIL import Image
 from decouple import config
 
-gen_restore_bucket = "abuela_input_images_dev"
-scratches_bucket = "abuela_input_images_scratches_dev"
+gen_restore_input = "abuela_input_images_dev"
+scratches_restore_input = "abuela_input_images_scratches_dev"
+restored_images = "abuela_input_images_dev"
 
 # App libraries
 from app.object_store import objectStore as objectstore
@@ -22,13 +23,6 @@ from app.pipelines import Jaruco as Jaruco
 # Start of Streamlit App
 # Convert this to an actual Main function later
 st.title("Hola, Abuela!")
-# st.markdown(
-#     "##Step 1."
-#     )
-# st.markdown(
-#     "Pick a photo you want to restore."
-#     )
-
 
 st.sidebar.write(
     '''
@@ -63,17 +57,23 @@ if uploaded_file is not None:
         if submitted:
             if restore_type == 'No - General Restore':
                 # TEMP: Upload it to gcloud to bkup
-                objectstore.upload_blob(gen_restore_bucket, uploaded_file, uploaded_file.name)
+                objectstore.upload_blob(gen_restore_input, uploaded_file, uploaded_file.name)
                 
-                # Kick Off Restoration pipeline for no_scratch img
+                # Kick off restoration pipeline for no_scratch img
                 Jaruco.general_restore(uploaded_file)
+
+                # Fetch the restored image
+                restored_image = objectstore.download_blob(restored_images)
 
             elif restore_type == 'Yes - Fill In Cracks':
                 # TEMP: Upload it to gcloud to bkup
-                objectstore.upload_blob(scratches_bucket, uploaded_file, uploaded_file.name)
+                objectstore.upload_blob(scratches_restore_input, uploaded_file, uploaded_file.name)
                 
-                # Kick Off Restoration pipeline for imgs with scratches
+                # Kick off restoration pipeline for imgs with scratches
                 Jaruco.general_restore_with_cracks(uploaded_file)
+
+                # Fetech the restored cracked image
+                restored_image = objectstore.download_blob(restored_images)
             else:
                 pass
             
@@ -87,4 +87,4 @@ if uploaded_file is not None:
 
             with after:
                 st.header("After")
-                st.image(objectstore.download_blob('abuela_output_images_dev'))
+                st.image(restored_image)

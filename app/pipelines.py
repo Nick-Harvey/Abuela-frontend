@@ -21,16 +21,21 @@ class Jaruco:
 			client.put_file_bytes(commit, filename, img_bytes)
 			pass
 
-		with st.spinner(text='Restoring... (~0 Seconds)'):
-			time.sleep(30)
+		#TODO Build an actual progress function
+		with st.spinner(text='Restoring... (~20 Seconds)'):
+			time.sleep(20)
 			pass
 		pass
-
 
 	def general_restore_wcracks(uploaded_file):
 		"""Do a general restore on a photo that does have cracks"""
 		filename = '/{}'.format(uploaded_file.name)
 		img_bytes = uploaded_file.getvalue()
+		
 		with client.commit("general_restore_w_cracks_input", "master") as commit:
-		    client.put_file_bytes(commit, filename, img_bytes)
+			client.put_file_bytes(commit, filename, img_bytes)
+
+		with st.spinner(text='Restoring... (~30 Seconds)'):
+			time.sleep(30)
+			pass
 		pass
