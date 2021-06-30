@@ -35,7 +35,7 @@ class Jaruco:
 		with client.commit("general_restore_w_cracks_input", "master") as commit:
 			client.put_file_bytes(commit, filename, img_bytes)
 
-		with st.spinner(text='Restoring... (~30 Seconds)'):
-			time.sleep(30)
+		with st.spinner(text='Restoring... (~40 Seconds)'):
+			time.sleep(40)
 			pass
 		pass

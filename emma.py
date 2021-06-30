@@ -70,7 +70,7 @@ if uploaded_file is not None:
                 objectstore.upload_blob(scratches_restore_input, uploaded_file, uploaded_file.name)
                 
                 # Kick off restoration pipeline for imgs with scratches
-                Jaruco.general_restore_with_cracks(uploaded_file)
+                Jaruco.general_restore_wcracks(uploaded_file)
 
                 # Fetech the restored cracked image
                 restored_image = objectstore.download_blob(restored_images)
