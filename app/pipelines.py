@@ -23,7 +23,7 @@ class Jaruco:
 
 		#TODO Build an actual progress function
 		with st.spinner(text='Restoring... (~20 Seconds)'):
-			time.sleep(20)
+			time.sleep(45)
 			pass
 		pass
 
