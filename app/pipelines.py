@@ -2,7 +2,6 @@ import os
 import logging
 import time
 import python_pachyderm
-from PIL import Image
 import streamlit as st
 
 # Connects to a pachyderm cluster on localhost:30650.
@@ -24,6 +23,18 @@ class Jaruco:
 		#TODO Build an actual progress function
 		with st.spinner(text='Restoring... (~20 Seconds)'):
 			time.sleep(20)
+			pass
+
+		#TODO Build an actual progress function
+		with st.spinner(text='Restoring...'):
+			# Check Pachyderm Jobs
+			while True:
+				time.sleep(5)
+				try:
+					if all(job.state == 3 for job in client.list("general_restore")):
+						break
+				except Exception as e:
+					logging.error("job fetch failed: %s".format(e))
 			pass
 		pass
 
