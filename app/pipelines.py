@@ -23,18 +23,9 @@ class Jaruco:
 
 		#TODO Build an actual progress function
 		with st.spinner(text='Restoring... (~20 Seconds)'):
-			# This is what Yusuf added
-			while True:
-				time.sleep(5)
-				try:
-					if all(job.state == 3 for job in client.list("general_restore_input")):
-						break
-				except Exception as e:
-					logging.error("job fetch failed: %s".format(e))
+			time.sleep(45)
 			pass
 		pass
-
-
 
 	def general_restore_wcracks(uploaded_file):
 		"""Do a general restore on a photo that does have cracks"""

@@ -14,7 +14,7 @@ scratches_restore_input = "abuela_input_images_scratches_dev"
 restored_images = "abuela_input_images_dev"
 
 # App libraries
-from app.object_store import ObjectStore
+from app.object_store import objectStore as objectstore
 # Jaruco is the hometown my grandmother is from in Cuba.
 # She is the insipiration for this project.
 from app.pipelines import Jaruco as Jaruco
@@ -41,7 +41,6 @@ if uploaded_file is not None:
     image = Image.open(uploaded_file)
 
 
-    # Streamlit markdown 
     '''
     **This is the photo that will get restored**
     '''
@@ -53,29 +52,28 @@ if uploaded_file is not None:
     '''
     with st.form("Choose Restore Option"):
         restore_type = st.radio("Does the image contain cracks or creases?", ['No - General Restore', 'Yes - Fill In Cracks'])
-        submitted = st.form_submit_button("Restore")
-        object_store = ObjectStore()
+        submitted = st.form_submit_button("Restore") 
 
         if submitted:
             if restore_type == 'No - General Restore':
                 # TEMP: Upload it to gcloud to bkup
-                object_store.upload_blob(gen_restore_input, uploaded_file, uploaded_file.name)
+                objectstore.upload_blob(gen_restore_input, uploaded_file, uploaded_file.name)
                 
                 # Kick off restoration pipeline for no_scratch img
                 Jaruco.general_restore(uploaded_file)
 
                 # Fetch the restored image
-                restored_image = object_store.download_blob(restored_images)
+                restored_image = objectstore.download_blob(restored_images)
 
             elif restore_type == 'Yes - Fill In Cracks':
                 # TEMP: Upload it to gcloud to bkup
-                object_store.upload_blob(scratches_restore_input, uploaded_file, uploaded_file.name)
+                objectstore.upload_blob(scratches_restore_input, uploaded_file, uploaded_file.name)
                 
                 # Kick off restoration pipeline for imgs with scratches
                 Jaruco.general_restore_wcracks(uploaded_file)
 
                 # Fetech the restored cracked image
-                restored_image = object_store.download_blob(restored_images)
+                restored_image = objectstore.download_blob(restored_images)
             else:
                 pass
             
