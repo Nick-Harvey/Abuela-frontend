@@ -32,9 +32,13 @@ class ObjectStore:
 
 	    for blob in self.client.list_blobs(bucket_name, prefix='/final_output/'):
 	    	filename = blob.name
-	    	restored_image = blob.download_as_bytes()
+	    	
+	    	try:
+	    		restored_image = blob.download_as_bytes()
 
-	    	logging.info(
-			"File {} downloaded to localhost.".format(filename)
+		    	logging.info(
+				"File {} downloaded to localhost.".format(filename)
+			except Exception as e:
+				logging.error("unable to download file: {}".format(e))
 	
-	    return restored_image
+	    	return restored_image
