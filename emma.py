@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import time
-from matplotlib import pyplot as plt
+
 from google.cloud import storage
 import os
 from PIL import Image
@@ -16,7 +16,7 @@ restored_images = "abuela_input_images_dev"
 from app.object_store import ObjectStore
 # Jaruco is the hometown my grandmother is from in Cuba.
 # She is the insipiration for this project.
-from app.pipelines import Jaruco as Jaruco
+from app.pipelines import Jaruco
 
 
 # Start of Streamlit App
