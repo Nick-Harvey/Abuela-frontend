@@ -9,7 +9,6 @@ class Jaruco:
 
 	def general_restore(self, uploaded_file):
 
-
 		"""Do a general restore on a photo that doesn't have cracks"""
 		filename = '/{}'.format(uploaded_file.name)
 		img_bytes = uploaded_file.getvalue()
@@ -24,7 +23,7 @@ class Jaruco:
 			while True:
 				time.sleep(5)
 				try:
-					if all(job.state == 3 for job in self.client.list("general_restore")):
+					if all(job.state == 3 for job in self.client.list_job("general_restore")):
 						break
 				except Exception as e:
 					logging.error("job fetch failed: {}".format(e))
