@@ -6,8 +6,6 @@ from decouple import config
 #PROJECT = config('GCLOUD_PROJECT')
 CREDS = config('GOOGLE_APPLICATION_CREDENTIALS')
 
-client = storage.Client()
-
 class ObjectStore:
 	def __init__(self):
 		self.client = storage.Client()
@@ -29,14 +27,14 @@ class ObjectStore:
 
 	def download_blob(self, bucket_name):
 	    """Downloads a blob from the bucket."""
-	    # dev bucket_name = "abuela_output_images_dev"
+	    bucket_name = "abuela_output_images_dev"
 	    # destination_file_name = "local/path/to/file"
 
 	    for blob in self.client.list_blobs(bucket_name, prefix='/final_output/'):
 	    	filename = blob.name
 	    	restored_image = blob.download_as_bytes()
+
+	    	logging.info(
+			"File {} downloaded to localhost.".format(filename)
 	
-	    print(
-	        "Blob {} downloaded to localhost.".format(filename)
-	    )
 	    return restored_image
