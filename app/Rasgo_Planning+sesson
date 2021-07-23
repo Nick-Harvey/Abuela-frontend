@@ -1,0 +1,46 @@
+Problem Statement: 
+
+Enable DS/anyone to get from raw data to insights in under 5 minutes
+
+
+Milestone 0: Product Simple features are available in data warehouse tables. 
+	- Complex / f500 has gone through a operational pyspark/DBT to do ETL Pipeline (airflow) 
+
+Milestone 1: Data Scientist is extracts features in to dataframe for more complex features
+	- DS pulls simple features into Pandas for further feature engineering /
+
+Milestone 2: Complex features are saved out to a external storage and trained model meets spec
+ 	- 
+
+Milestone 3: Model + code get sent to staging/QA
+	- Bundle preprocessing + Scoring 
+	- Package up code readyo to ship
+
+Milestone 4: Model is deployed and optimized 
+
+
+Pain Points
+
+# Milestone 1 and milestone 2 
+
+1. Get the right data to the right place at the right time
+	-  benefit = You don't have to query the database.
+
+
+
+
+AES (800) - F.S.D.S : Rasgo is his disemination layer for his knowlege which is data context
+
+Climate (<1000) - MLE : Distribute the right features to broader data science team (250+) simply
+	- enable teams to contribute features
+
+Stanely Black n Decker D.S.M (60k): Distribute features
+
+Farmers Fridge D.S.M (200): shit ton of data in snowflake. Distributed feature catalog inbetween Data and models. in a callable way to train prod models. 
+
+GH	 (200): Standarize the right feature logic and then distribute to the team
+
+
+Presient DS/DSM( 10): Distribute features from warehouse to models w/out 
+
+CFIN DS/DSM/DE (5): Existing model factory, need a better way to get features from data layer to model later 
