@@ -1,8 +1,4 @@
 import streamlit as st
-import numpy as np
-import pandas as pd
-import time
-
 from google.cloud import storage
 import os
 from PIL import Image
@@ -39,6 +35,7 @@ if uploaded_file is not None:
     #Display the photo that will get enhanced
     image = Image.open(uploaded_file)
     object_store = ObjectStore()
+    jaruco = Jaruco()
 
     '''
     **This is the photo that will get restored**
@@ -50,16 +47,23 @@ if uploaded_file is not None:
     **Choose what type of restore you want to apply**
     '''
     with st.form("Choose Restore Option"):
-        restore_type = st.radio("Does the image contain cracks or creases?", ['No - General Restore', 'Yes - Fill In Cracks'])
+        restore_type = st.radio(
+            "Does the image contain cracks or creases?", 
+            ['No - General Restore', 'Yes - Fill In Cracks']
+            ) 
         submitted = st.form_submit_button("Restore") 
 
         if submitted:
             if restore_type == 'No - General Restore':
                 # TEMP: Upload it to gcloud to bkup
-                object_store.upload_blob(gen_restore_input, uploaded_file, uploaded_file.name)
+                object_store.upload_blob(
+                    gen_restore_input, 
+                    uploaded_file, 
+                    uploaded_file.name
+                    )
                 
                 # Kick off restoration pipeline for no_scratch img
-                Jaruco.general_restore(uploaded_file)
+                jaruco.general_restore(uploaded_file)
 
                 # Fetch the restored image
                 restored_image = object_store.download_blob(restored_images)
@@ -69,7 +73,7 @@ if uploaded_file is not None:
                 object_store.upload_blob(scratches_restore_input, uploaded_file, uploaded_file.name)
                 
                 # Kick off restoration pipeline for imgs with scratches
-                Jaruco.general_restore_wcracks(uploaded_file)
+                jaruco.general_restore_wcracks(uploaded_file)
 
                 # Fetech the restored cracked image
                 restored_image = object_store.download_blob(restored_images)
