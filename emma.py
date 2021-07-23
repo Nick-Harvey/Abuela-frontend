@@ -2,7 +2,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import time
-import plotly.express as px
 from matplotlib import pyplot as plt
 from google.cloud import storage
 import os
