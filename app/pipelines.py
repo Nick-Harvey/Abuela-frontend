@@ -17,14 +17,21 @@ class Jaruco:
 			self.client.put_file_bytes(commit, filename, img_bytes)
 			pass
 
-		# TODO Build an actual progress function
 		with st.spinner(text='Restoring...'):
 			# Check Pachyderm Jobs
 			while True:
 				time.sleep(5)
+				status_check = 0
 				try:
 					if all(job.state == 3 for job in self.client.list_job("general_restore")):
 						break
+					status_check += 1
+
+					if status_check == 2:
+						print("Still checking")
+					if status_check == 4:
+						print("Almost done...")
+
 				except Exception as e:
 					logging.error("job fetch failed: {}".format(e))
 			pass
