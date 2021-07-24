@@ -66,7 +66,10 @@ if uploaded_file is not None:
                 jaruco.general_restore(uploaded_file)
 
                 # Fetch the restored image
-                restored_image = object_store.download_blob(restored_images)
+                restored_image = object_store.download_blob(
+                    restored_images, 
+                    uploaded_file.name
+                    )
 
             elif restore_type == 'Yes - Fill In Cracks':
                 # TEMP: Upload it to gcloud to bkup
@@ -75,7 +78,7 @@ if uploaded_file is not None:
                 # Kick off restoration pipeline for imgs with scratches
                 jaruco.general_restore_wcracks(uploaded_file)
 
-                # Fetech the restored cracked image
+                # Fetch the restored cracked image
                 restored_image = object_store.download_blob(restored_images)
             else:
                 pass
