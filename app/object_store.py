@@ -35,12 +35,12 @@ class ObjectStore:
 			filename = blob.name
 			
 			try:
-				restored_image = blob.download_as_bytes()
+				restored_image = blob.download_as_bytes(file)
 
 				logging.info(
 					"File {} downloaded to localhost.".format(filename)
 				)
-				
+
 			except Exception as e:
 				logging.error("unable to download file: {}".format(e))
 	
