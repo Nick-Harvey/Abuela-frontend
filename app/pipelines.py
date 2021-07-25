@@ -27,13 +27,13 @@ class Jaruco:
 						break
 					status_check += 1
 
-					if status_check == 2:
-						print("Still checking")
-					if status_check == 4:
-						print("Almost done...")
-
 				except Exception as e:
 					logging.error("job fetch failed: {}".format(e))
+				
+				if status_check == 2:
+					st.write("Still Restoring")
+				if status_check == 4:
+					st.write("Almost done...")
 			pass
 		pass
 
