@@ -39,7 +39,7 @@ class Jaruco:
                         logging.error("job fetch failed: {}".format(e))
 
                     status_text.text('Restoring {}'.format(uploaded_file.name))
-                    time.sleep(5)
+                time.sleep(5)
             pass
         pass
 
