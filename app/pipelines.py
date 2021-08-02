@@ -19,11 +19,11 @@ class Jaruco:
             pass
 
         with st.spinner(text='Restoring...'):
+            progress_bar = st.progress(0)
+            status_text = st.empty()
+            
             # Check Pachyderm Jobs
             while True:
-                
-                progress_bar = st.progress(0)
-                status_text = st.empty()
 
                 for i in range(100):
                     progress_bar.progress(i + 1)
