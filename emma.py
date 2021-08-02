@@ -1,19 +1,15 @@
 import streamlit as st
-from google.cloud import storage
-import os
 from PIL import Image
 from decouple import config
-
-gen_restore_input = "abuela_input_images_dev"
-scratches_restore_input = "abuela_input_images_scratches_dev"
-restored_images = "abuela_input_images_dev"
-
 # App libraries
 from app.object_store import ObjectStore
 # Jaruco is the hometown my grandmother is from in Cuba.
 # She is the insipiration for this project.
 from app.pipelines import Jaruco
 
+gen_restore_input = "abuela_input_images_dev"
+scratches_restore_input = "abuela_input_images_scratches_dev"
+restored_images = "abuela_input_images_dev"
 
 # Start of Streamlit App
 # Convert this to an actual Main function later
@@ -27,10 +23,12 @@ st.sidebar.write(
     )
 
 
-uploaded_file = st.sidebar.file_uploader("Max image size 650x650 (temp issue due to gpu limits)")
+uploaded_file = st.sidebar.file_uploader(
+    "Max image size 650x650 (temp issue due to gpu limits)"
+    )
 
 
-## Process the Photo
+# Process the Photo
 if uploaded_file is not None:
     #Display the photo that will get enhanced
     image = Image.open(uploaded_file)
@@ -94,3 +92,4 @@ if uploaded_file is not None:
             with after:
                 st.header("After")
                 st.image(restored_image)
+                
