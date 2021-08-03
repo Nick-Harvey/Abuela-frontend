@@ -39,7 +39,7 @@ class Jaruco:
                     except Exception as e:
                         logging.error("job fetch failed: {}".format(e))
 
-                    
+                pass
             pass
         pass
 
