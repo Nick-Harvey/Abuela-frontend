@@ -31,15 +31,15 @@ class Jaruco:
                     ):
                         progress_bar.progress(100)
                         break
-                    for i in range(100):
-                        progress_bar.progress(i + 1)
-                        status_text.text('Restoring {}'.format(uploaded_file.name))
-                        time.sleep(2)
 
                 except Exception as e:
                     logging.error("job fetch failed: {}".format(e))
 
-                pass
+                for i in range(100):
+                    progress_bar.progress(i + 1)
+                    status_text.text('Restoring {}'.format(uploaded_file.name))
+                    time.sleep(2)
+
             pass
         pass
 
