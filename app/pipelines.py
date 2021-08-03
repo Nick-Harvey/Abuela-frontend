@@ -30,6 +30,7 @@ class Jaruco:
                         if all(job.state == 3 for job in self.client.list_job(
                             "general_restore")
                         ):
+                            progress_bar.progress(100)
                             break
 
                     except Exception as e:
@@ -37,9 +38,8 @@ class Jaruco:
 
                     progress_bar.progress(i + 1)
                     status_text.text('Restoring {}'.format(uploaded_file.name))
-                    time.sleep(2)
+                    time.sleep(.2)
             pass
-            progress_bar.progress(100)
         pass
 
     def general_restore_wcracks(self, uploaded_file):
