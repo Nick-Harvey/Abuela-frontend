@@ -24,20 +24,21 @@ class Jaruco:
             status_text = st.empty()
 
             # Check Pachyderm Jobs
-            
-            for i in range(100):
-                try:
-                    if all(job.state == 3 for job in self.client.list_job(
-                        "general_restore")
-                    ):
-                        progress_bar.progress(100)
-                        break
-                    progress_bar.progress(i + 1)
-                    status_text.text('Restoring {}'.format(uploaded_file.name))
-                    time.sleep(2)
+            while True:
+                for i in range(100):
+                    try:
+                        if all(job.state == 3 for job in self.client.list_job(
+                            "general_restore")
+                        ):
+                            progress_bar.progress(100)
+                            break
+                        progress_bar.progress(i + 1)
+                        status_text.text('Restoring {}'.format(uploaded_file.name))
+                        time.sleep(2)
 
-                except Exception as e:
-                    logging.error("job fetch failed: {}".format(e))
+                    except Exception as e:
+                        logging.error("job fetch failed: {}".format(e))
+                    break
 
             pass
         pass
