@@ -25,7 +25,6 @@ class Jaruco:
 
             # Check Pachyderm Jobs
             while True:
-                time.sleep(5)
                 for i in range(100):
                     try:
                         if all(job.state == 3 for job in self.client.list_job(
@@ -38,7 +37,7 @@ class Jaruco:
 
                     progress_bar.progress(i + 1)
                     status_text.text('Restoring {}'.format(uploaded_file.name))
-                
+                    time.sleep(2)
             pass
             progress_bar.progress(100)
         pass
