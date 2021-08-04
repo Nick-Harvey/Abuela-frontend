@@ -36,11 +36,20 @@ class Jaruco:
                     ):
                         progress_bar.progress(100)
                         break
+                    elif all(job.state == 2 for job in self.client.list_job(
+                        "general_restore")
+                    ):
+                        progress_bar.progress(50)
+                        continue
+                    elif all(job.state == 1 for job in self.client.list_job(
+                        "general_restore")
+                    ):
+                        progress_bar.progress(10)
+                        continue
 
-                    progress_bar.progress += 1
                     status_text.text('Restoring {}'.format(uploaded_file.name))
                     time.sleep(2)
-                    
+
                 except Exception as e:
                     logging.error("job fetch failed: {}".format(e))
             pass
