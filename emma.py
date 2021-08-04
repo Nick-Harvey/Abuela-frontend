@@ -9,7 +9,7 @@ from app.pipelines import Jaruco
 
 gen_restore_input = "abuela_input_images_dev"
 scratches_restore_input = "abuela_input_images_scratches_dev"
-restored_images = "abuela_input_images_dev"
+restored_images_output = "restored_images_output"
 
 # Start of Streamlit App
 # Convert this to an actual Main function later
@@ -77,7 +77,7 @@ if uploaded_file is not None:
                 jaruco.general_restore_wcracks(uploaded_file)
 
                 # Fetch the restored cracked image
-                restored_image = object_store.download_blob(restored_images)
+                restored_image = object_store.download_blob(restored_images_output)
             else:
                 pass
             
