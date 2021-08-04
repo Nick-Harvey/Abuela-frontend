@@ -36,16 +36,14 @@ class Jaruco:
                     ):
                         progress_bar.progress(100)
                         break
-                    elif all(job.state == 2 for job in self.client.list_job(
+                    elif any(job.state == 2 for job in self.client.list_job(
                         "general_restore")
                     ):
                         progress_bar.progress(50)
-                        continue
-                    elif all(job.state == 1 for job in self.client.list_job(
+                    elif any(job.state == 1 for job in self.client.list_job(
                         "general_restore")
                     ):
                         progress_bar.progress(10)
-                        continue
 
                     status_text.text('Restoring {}'.format(uploaded_file.name))
                     time.sleep(2)
