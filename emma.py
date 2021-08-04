@@ -65,7 +65,7 @@ if uploaded_file is not None:
 
                 # Fetch the restored image
                 restored_image = object_store.download_blob(
-                    restored_images, 
+                    restored_images_output, 
                     uploaded_file.name
                     )
 
@@ -92,4 +92,3 @@ if uploaded_file is not None:
             with after:
                 st.header("After")
                 st.image(restored_image)
-                
