@@ -35,7 +35,7 @@ class ObjectStore:
             filename = blob.name
             
             try:
-                restored_image = blob.download_as_bytes(file)
+                restored_image = blob.download_as_bytes(file.name)
 
                 logging.info(
                     "File {} downloaded to localhost.".format(filename)
