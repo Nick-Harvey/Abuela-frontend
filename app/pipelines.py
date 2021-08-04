@@ -56,9 +56,8 @@ class Jaruco:
                         ):
                             progress_bar.progress(100)
                             break
-
-                    except Exception as e:
-                        logging.error("job fetch failed: {}".format(e))
+                        except Exception as e:
+                            logging.error("job fetch failed: {}".format(e))
 
                     status_text.text('Restoring {}'.format(uploaded_file.name))
                     progress_bar.progress(i + 1)
