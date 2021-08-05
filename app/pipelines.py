@@ -42,6 +42,7 @@ class Jaruco:
                     status_text.text('Restoring {}'.format(uploaded_file.name))
                     time.sleep(1)
             pass
+        pass
 
         #         try:
         #             if all(job.state == 3 for job in self.client.list_job(
