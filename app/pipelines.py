@@ -25,7 +25,7 @@ class Jaruco:
 
         with st.spinner(text='Restoring...'):
             
-            progress_bar = st.progress(0)
+            progress_bar = st.progress(5)
             status_text = st.empty()
 
             # Check Pachyderm Jobs
@@ -36,17 +36,12 @@ class Jaruco:
                     ):
                         progress_bar.progress(100)
                         break
-                    elif any(job.state == 2 for job in self.client.list_job(
-                        "general_restore")
-                    ):
-                        progress_bar.progress(50)
-                    elif any(job.state == 1 for job in self.client.list_job(
-                        "general_restore")
-                    ):
-                        progress_bar.progress(10)
 
                     status_text.text('Restoring {}'.format(uploaded_file.name))
-                    time.sleep(2)
+
+                    for i in range(100):
+                        progress_bar(i + 1)
+                        time.sleep(1)
 
                 except Exception as e:
                     logging.error("job fetch failed: {}".format(e))

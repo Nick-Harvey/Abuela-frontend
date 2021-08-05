@@ -1,6 +1,8 @@
 import logging
+import glob
 from google.cloud import storage
 from decouple import config
+
 
 # PROJECT = config('GCLOUD_PROJECT')
 CREDS = config('GOOGLE_APPLICATION_CREDENTIALS')
@@ -26,19 +28,20 @@ class ObjectStore:
                 )
             )
 
-    def download_blob(self, bucket_name, file):
+    def download_blob(self, bucket_name, filename):
         """Downloads a blob from the bucket."""
         # dev_bucket_name = "abuela_output_images_dev"
         # destination_file_name = "local/path/to/file"
 
         for blob in self.client.list_blobs(bucket_name, prefix='/final_output/'):
-            filename = blob.name
-            
+            old_fname = filename[-4]
+            fname = old_fname + ".png"
+
             try:
-                restored_image = blob.download_as_bytes(filename)
+                restored_image = blob.download_as_bytes(fname)
 
                 logging.info(
-                    "File {} downloaded to localhost.".format(filename)
+                    "File {} downloaded to localhost.".format(fname)
                 )
 
             except Exception as e:
