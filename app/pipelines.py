@@ -30,23 +30,36 @@ class Jaruco:
 
             # Check Pachyderm Jobs
             while True:
-                try:
-                    if all(job.state == 3 for job in self.client.list_job(
-                        "general_restore")
-                    ):
-                        progress_bar.progress(100)
-                        break
+                for i in range(100):
+                    try:
+                        if all(job.state == 3 for job in self.client.list_job("general_restore")):
+                            progress_bar.progress(100)
+                            break
+                    except Exception as e:
+                        logging.error("job fetch failed: {}".format(e))
 
+                    progress_bar.progress(i + 1)
                     status_text.text('Restoring {}'.format(uploaded_file.name))
-
-                    for i in range(100):
-                        progress_bar(i + 1)
-                        time.sleep(1)
-
-                except Exception as e:
-                    logging.error("job fetch failed: {}".format(e))
+                    time.sleep(1)
             pass
-        pass
+
+        #         try:
+        #             if all(job.state == 3 for job in self.client.list_job(
+        #                 "general_restore")
+        #             ):
+        #                 progress_bar.progress(99)
+        #                 break
+
+        #             status_text.text('Restoring {}'.format(uploaded_file.name))
+
+        #             for i in range(100):
+        #                 progress_bar.progress(i + 1)
+        #                 time.sleep(1)
+
+        #         except Exception as e:
+        #             logging.error("job fetch failed: {}".format(e))
+        #     pass
+        # pass
 
     def general_restore_wcracks(self, uploaded_file):
         """Do a general restore on a photo that does have cracks"""
