@@ -8,7 +8,6 @@ class Jaruco:
     def __init__(self):
         self.client = python_pachyderm.Client()
 
-
     def get_job_state(self, pipeline_name=None):
         for job in self.client(pipeline_name):
             return job.state
@@ -42,6 +41,8 @@ class Jaruco:
                     status_text.text('Restoring {}'.format(uploaded_file.name))
                     time.sleep(1)
             pass
+            status_text.text("Done!!")
+            logging.info("Finished Restore. Continueing...")
         pass
 
         #         try:
