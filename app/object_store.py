@@ -37,14 +37,10 @@ class ObjectStore:
             old_fname = filename[-4]
             fname = old_fname + ".png"
 
-            try:
-                restored_image = blob.download_as_bytes(fname)
+            restored_image = blob.download_as_bytes(fname)
 
-                logging.info(
-                    "File {} downloaded to localhost.".format(fname)
-                )
-
-            except Exception as e:
-                logging.error("unable to download file: {}".format(e))
-    
-            return restored_image
+            logging.info(
+                "File {} downloaded to localhost.".format(fname)
+            )
+            
+            return restored_image   
