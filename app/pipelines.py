@@ -24,25 +24,22 @@ class Jaruco:
 
         with st.spinner(text='Restoring...'):
             
-            progress_bar = st.progress(5)
+            progress_bar = st.progress(0)
             status_text = st.empty()
 
             # Check Pachyderm Jobs
-            while True:
-                for i in range(100):
-                    try:
-                        if all(job.state == 3 for job in self.client.list_job("general_restore")):
-                            progress_bar.progress(100)
-                            break
-                    except Exception as e:
-                        logging.error("job fetch failed: {}".format(e))
+            for i in range(100):
+                try:
+                    if all(job.state == 3 for job in self.client.list_job("general_restore")):
+                        status_text.text('Finished Restoring {}'.format(uploaded_file.name))
+                        progress_bar.progress(100)
+                        break
+                except Exception as e:
+                    logging.error("Restore failed: {}".format(e))
 
-                    progress_bar.progress(i + 1)
-                    status_text.text('Restoring {}'.format(uploaded_file.name))
-                    time.sleep(1)
-            pass
-            status_text.text("Done!!")
-            logging.info("Finished Restore. Continueing...")
+                progress_bar.progress(i + 1)
+                status_text.text('Restoring {}'.format(uploaded_file.name))
+                time.sleep(2)
         pass
 
         #         try:
@@ -71,7 +68,7 @@ class Jaruco:
         with self.client.commit("general_restore_w_cracks_input", "master") as commit:
             self.client.put_file_bytes(commit, filename, img_bytes)
 
-        with st.spinner(text='Restoring... (~40 Seconds)'):
-            time.sleep(40)
+        with st.spinner(text='Restoring... (~80 Seconds)'):
+            time.sleep(80)
             pass
         pass
