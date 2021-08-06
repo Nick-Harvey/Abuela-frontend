@@ -18,8 +18,14 @@ class Jaruco:
 
         # Check Pachyderm Jobs
         for i in range(100):
+            # try:
+            #     if all(job.state == 3 for job in self.client.list_job("{}/{}".format(pipeline_name + "@master", commit_id))):
+            #         status_text.text('Finished Restoring {}'.format(uploaded_file.name))
+            #         progress_bar.progress(100)
+            #         return True
+
             try:
-                if all(job.state == 3 for job in self.client.list_job("{}/{}".format(pipeline_name + "@master", commit_id))):
+                if all(job.state == 3 for job in self.client.list_job(pipeline_name, commit_id)):
                     status_text.text('Finished Restoring {}'.format(uploaded_file.name))
                     progress_bar.progress(100)
                     return True
@@ -33,14 +39,12 @@ class Jaruco:
 
         return False
 
-
     def general_restore(self, uploaded_file):
 
         """Do a general restore on a photo that doesn't have cracks"""
         filename = '/{}'.format(uploaded_file.name)
         img_bytes = uploaded_file.getvalue()
         commit_id = None
-
 
         with self.client.commit("general_restore_input", "master") as commit:
             self.client.put_file_bytes(commit, filename, img_bytes)
@@ -51,7 +55,6 @@ class Jaruco:
                 # TODO: print some error message
                 pass
 
-
     def general_restore_wcracks(self, uploaded_file):
         """Do a general restore on a photo that does have cracks"""
         filename = '/{}'.format(uploaded_file.name)
@@ -59,5 +62,3 @@ class Jaruco:
         
         with self.client.commit("general_restore_w_cracks_input", "master") as commit:
             self.client.put_file_bytes(commit, filename, img_bytes)
-
-        
