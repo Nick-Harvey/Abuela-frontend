@@ -12,7 +12,7 @@ class Jaruco:
         for job in self.client(pipeline_name):
             return job.state
 
-    def job_progess(self, pipeline_name, uploaded_file, commit_id):
+    def job_progress(self, pipeline_name, uploaded_file, commit_id):
         progress_bar = st.progress(0)
         status_text = st.empty()
 
