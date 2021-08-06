@@ -1,5 +1,5 @@
 import logging
-import glob
+from pathlib import Path
 from google.cloud import storage
 from decouple import config
 
@@ -34,7 +34,7 @@ class ObjectStore:
         # destination_file_name = "local/path/to/file"
 
         for blob in self.client.list_blobs(bucket_name, prefix='/final_output/'):
-            old_fname = filename[-4]
+            old_fname = Path(filename).stem
             fname = old_fname + ".png"
 
             restored_image = blob.download_as_bytes(fname)
@@ -42,5 +42,5 @@ class ObjectStore:
             logging.info(
                 "File {} downloaded to localhost.".format(fname)
             )
-            
+
             return restored_image   
