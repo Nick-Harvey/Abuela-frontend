@@ -19,12 +19,12 @@ class Jaruco:
         # Check Pachyderm Jobs
         for i in range(100):
             try:
-                if all(job.state == 3 for job in self.client.list_job(pipeline_name, input_commit = commit_id)):
+                if all(job.state == 3 for job in self.client.list_job("{}/{}".format(pipeline_name, commit_id))):
                     status_text.text('Finished Restoring {}'.format(uploaded_file.name))
                     progress_bar.progress(100)
                     return True
             except Exception as e:
-                logging.error("Restore failed: ", e)
+                logging.error("Restore failed: {}".format(e))
 
             progress_bar.progress(i + 1)
             status_text.text('Restoring {}'.format(uploaded_file.name))
