@@ -24,7 +24,7 @@ class Jaruco:
                     progress_bar.progress(100)
                     return True
             except Exception as e:
-                logging.error("Restore failed: {}".format(e))
+                logging.error("Restore failed: ", e)
 
             progress_bar.progress(i + 1)
             status_text.text('Restoring {}'.format(uploaded_file.name))
