@@ -24,7 +24,7 @@ class Jaruco:
             #         progress_bar.progress(100)
             #         return True
             try:
-                if all(job.state == 3 for job in self.client.list_job(commit_id):
+                if all(job.state == 3 for job in self.client.list_job(commit_id)):
                     status_text.text('Finished Restoring {}'.format(uploaded_file.name))
                     progress_bar.progress(100)
                     return True
