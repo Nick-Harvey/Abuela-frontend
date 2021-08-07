@@ -40,14 +40,14 @@ class Jaruco:
         """Do a general restore on a photo that doesn't have cracks"""
         filename = '/{}'.format(uploaded_file.name)
         img_bytes = uploaded_file.getvalue()
-        commit_id = None
+        pcommit_id = None
 
         with self.client.commit("general_restore_input", "master") as commit:
             self.client.put_file_bytes(commit, filename, img_bytes)
-            commit_id = commit.id
+            pcommit_id = commit.id
 
         with st.spinner(text='Restoring...'):
-            if not self.job_progress("general_restore", uploaded_file, commit_id):
+            if not self.job_progress("general_restore", uploaded_file, pcommit_id):
                 logging.error("Restore failed: ", exc_info=True)
                 pass
 
@@ -55,12 +55,13 @@ class Jaruco:
         """Do a general restore on a photo that does have cracks"""
         filename = '/{}'.format(uploaded_file.name)
         img_bytes = uploaded_file.getvalue()
-        commit_id = None
+        pcommit_id = None
 
         with self.client.commit("general_restore_w_cracks_input", "master") as commit:
             self.client.put_file_bytes(commit, filename, img_bytes)
+            pcommit_id = commit.id
 
         with st.spinner(text='Restoring...'):
-            if not self.job_progress("general_restore", uploaded_file, commit_id):
+            if not self.job_progress("general_restore", uploaded_file, pcommit_id):
                 logging.error("Restore failed: ", exc_info=True)
                 pass
