@@ -21,7 +21,7 @@ class Jaruco:
             #         return True
 
             try:
-                if all(job.state == 3 for job in self.client.list_job(pipeline_name, commit_id)):
+                if all(job.state == 3 for job in self.client.list_job((pipeline_name, "master", commit_id))):
                     status_text.text('Finished Restoring {}'.format(uploaded_file.name))
                     progress_bar.progress(100)
                     return True
